@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Country Generator</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      color: #333;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .section {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #ff6b6b;
+    }
+
+    #country-btn {
+      padding: 12px 25px;
+      font-size: 1rem;
+      background-color: #4e89ae;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #country-btn:hover {
+      background-color: #386fa4;
+    }
+
+    #country-result {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      color: #222;
+      font-weight: bold;
+    }
+
+    #country-result img {
+      display: block;
+      margin: 10px auto;
+      max-width: 80px;
+      height: auto;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <section id="random-country" class="section">
+    <h2>Where Should You Travel?</h2>
+    <button id="country-btn">Pick a Country</button>
+    <div id="country-result"></div>
+  </section>
+
+  <script>
+    const countries = {
+      "Japan! Japan has more than 6,800 islands, vending machines in Japan sell everything from umbrellas to ramen, and the Japanese bullet train can reach speeds over 320 km/h (200 mph).": "jp", 
+      "Italy! Italy has more UNESCO World Heritage Sites than any other country, pizza was invented in Naples, Italy, and Venice has over 400 bridges crossing its canals.": "it", 
+      "France! France is the most visited country in the world, the French consume 10 billion baguettes a year, and the Louvre Museum in Paris is the world's largest art museum.": "fr", 
+      "Brazil! Brazil is the largest country in South America, is home to the Amazon rainforest, the world's largest tropical rainforest, and is the world's largest producer and exporter of coffee, cultivating over 40% of the world's supply.": "br", 
+      "Australia! Australia is the sixth-largest country in the world, home to unique wildlife, with 80% of its mammals, reptiles, and frogs being endemic, and has over 10,000 beaches.": "au",
+      "Canada! Canada is the second-largest country by area, is home to 3 million natural lakes, and the national animal of Canada is the beaver.": "ca", 
+      "India! India is the world's largest democracy, a major producer of milk and spices, and home to the largest vegetarian population globally. Bollywood also dominates film production, producing more films than Hollywood.": "in", 
+      "Thailand! Thailand is known as the 'Land of Smiles' and is the only Southeast Asian country not colonized by a European power. Buddhism is deeply ingrained, with about 95% of the population practicing Theravada Buddhism. ": "th", 
+      "Greece! Greece is the birthplace of democracy and philosophy, is also known for its stunning islands, ancient ruins, and rich traditions.": "gr", 
+      "Egypt! Egypt's pyramids, a symbol of ancient Egypt, were actually tombs, and the ancient Egyptians loved cats so much they even mummified them": "eg",
+      "Germany! Germany is the largest car producer in Europe, has over 20,000 castles, and the city Berlin has more bridges than Venice.": "de", 
+      "South Korea! South Korea is a global hub for e-sports, with professional tournaments broadcasted on television, and it boasts some of the fastest internet speeds in the world.": "kr", 
+      "Spain! Spain has four official languages, and is known for its delicious food and vibrant festivals.": "es", 
+      "Mexico! Mexico is the largest Spanish-speaking country, home to a vast array of indigenous languages, and possesses more pyramids than Egypt.": "mx", 
+      "Turkey! Turkey's captial Istanbul is a city on two continents, Santa Claus originates from Turkey, and oil wrestling is the national sport.": "tr",
+      "Vietnam! Vietnam is home to Son Doong Cave, the world's largest cave and is a biodiversity hotspot, with 16% of the world's species found within its borders.": "vn",
+      "Portugal! Portugal is the oldest nation-state in Europe and boasts a rich history and unique cultural traditions. It's known for its vibrant capital, Lisbon, and its famous Port wine.": "pt", 
+      "Argentina! Argentina is home to the highest mountain in the Americas, Aconcagua. Argentina also boasts incredible natural wonders like Iguazú Falls and the Perito Moreno Glacier, and is known for its love of football and rich Gaucho culture.": "ar", 
+      "South Africa! It's home to the world's largest wine route and the highest commercial bungee jump, and also played a pivotal role in the anti-apartheid movement.": "za", 
+      "New Zealand! It was the first country to grant women the right to vote, and it's also home to the longest place name in the English-speaking world, Taumatawhakatangihangakoauauotamateapokaiwhenuakitanatahu.": "nz",
+      "Iceland! It has the oldest parliament in the world, a significant belief in elves and other mythical creatures, and a thriving green energy sector. The country also features a unique breed of horses, a strong literary culture, and a history of being the last place on Earth to be settled by humans": "is", 
+      "Morocco! It was the first African nation to recognize American independence, has the world's oldest university in Fes, and is home to the Sahara Desert.": "ma", 
+      "China! The Great Wall of China is an impressive structure that spans over 4,160 miles. It's a series of fortifications, not a single continuous wall, and took over 2,000 years to build": "cn", 
+      "Indonesia! It's the world's largest archipelago, is a fascinating country with a rich tapestry of culture and nature.": "id", 
+      "Norway! It is home to the longest road tunnel in the world and is the birthplace of modern skiing. Additionally, Norway is a major player in the Winter Olympics and is credited with introducing salmon sushi to Japan.": "no",
+      "Switzerland! It's known for its neutrality throughout history, its square flag, and its high quality chocolate and cheese production.": "ch", 
+      "Netherlands! The Netherlands is a major exporter of flowers, including tulips. Amsterdam has over 1,200 bridges. The Netherlands is the world's safest country for cycling.": "nl", 
+      "Peru! It's home to Machu Picchu, the cradle of potatoes, and the location of the highest navigable lake in the world, Lake Titicaca.": "pe", 
+      "Russia! It has vast territory spanning 11 time zones, its status as a transcontinental nation, and its rich cultural heritage": "ru", 
+      "Kenya! Kenya boasts an incredible linguistic diversity, with over 60 different languages spoken, making it a melting pot of cultures. Kenyan athletes, particularly marathon runners, dominate the world stage, showcasing their exceptional stamina and dedication.": "ke",
+      "Sweden! It is known for its high quality of life and green initiatives, has many interesting facts, including its extensive forests, numerous lakes, and unique cultural practices. The country also boasts a strong social welfare system and a history of innovation.": "se", 
+      "Philippines! It is home to the largest underground river in the world. The Philippines is also the second-largest archipelago, with over 7,600 islands. It's the only Christian nation in Asia and boasts a rich culture, unique cuisine, and stunning natural beauty": "ph", 
+      "Ireland! Ireland is home to the most redheads in the world and has the largest number of castles, estimated at around 30,000. The country also claims to be the birthplace of whiskey and Guinness beer.": "ie", 
+      "Poland! Poland is home to Europe's largest bison herd, the Wieliczka Salt Mine (one of the world's oldest), and the Pol'and'Rock Festival, the world's largest open-air music festival.": "pl", 
+      "Czech Republic! Prague's Old Town Hall houses an astronomical clock, one of the oldest in the world and still functioning": "cz",
+      "Malaysia! Malaysia boasts the oldest tropical rainforests in the world, home to diverse flora and fauna, including the Malayan tiger and the world's largest flower.": "my", 
+      "Hungary! Budapest has the highest number of thermal springs in the world, with over 123 in the city and over 1,300 spas in the country.": "hu", 
+      "Colombia! Colombia boasts incredible biodiversity, being one of the world's most diverse countries. It's also the world's largest producer of emeralds, with 70-90% of the world's supply coming from the country.": "co", 
+      "Denmark! It is known for its happiness, rich history, and unique cultural aspects.": "dk", 
+      "Croatia! Croatia boasts a diverse array of intriguing facts, from its rich history and culture to its natural beauty and unique traditions.": "hr",
+      "Finland! Finland is often called the 'Land of a Thousand Lakes,' is known for its unique culture, stunning landscapes, and high quality of life.": "fi", 
+      "Slovenia! Slovenia is a small but diverse country in Eastern Europe with a rich history and natural beauty. It's known for its stunning landscapes, including the Alps, the Pannonian Plain, and the Adriatic Sea.": "si", 
+      "Singapore! It's a city-state, a green city, and home to the world's first night zoo. The country is actually made up of multiple islands, has a unique culture with influences from various Asian and European regions, and is renowned for its clean and efficient public transportation.": "sg", 
+      "Belgium! It's known for its waffles, chocolate, and beer, and is also home to the Smurfs, the inventor of the saxophone, and the world's longest tram line.": "be", 
+      "Nepal! It's home to the world's highest peak, Mount Everest, and boasts eight of the world's ten tallest mountains.": "np",
+      "Austria! Austria is home to the oldest still-operating restaurant in the world, St Peter Stiftskeller, established in 803. The world's oldest zoo, Tiergarten Schönbrunn in Vienna, is also located there. Austria is famous for its classical music composers like Mozart and Schubert.": "at", 
+      "Cuba! Cuba is the largest island in the Caribbean, stretching 750 miles (1,200 kilometers) east to west.": "cu", 
+      "Jordan! It's home to the Dead Sea, the lowest point on Earth, and the ancient city of Petra, one of the New7Wonders of the World. Additionally, Jordan has over 100,000 archaeological sites and is known for its diverse landscapes, including deserts, mountains, and the Red Sea.": "jo", 
+      "Israel! The glue on Israeli postage stamps is kosher. Additionally, the country boasts the lowest point on Earth, the Dead Sea, at 1,315 feet below sea level.": "il", 
+      "Chile! Chile is one of the longest countries in the world, stretching from north to south over 4,329 kilometers (2,680 miles). The Atacama Desert in the north is the driest desert on Earth, sometimes experiencing no rain for years.": "cl",
+      "United Kingdom! The UK was the first to issue postage stamps, and London is home to over 170 museums. Additionally, the UK is known for its love of tea, with Brits consuming an estimated 100 million cups daily.": "gb", 
+    };
+
+    const button = document.getElementById('country-btn');
+    const resultDiv = document.getElementById('country-result');
+
+    button.addEventListener('click', () => {
+      const countryNames = Object.keys(countries);
+      const randomIndex = Math.floor(Math.random() * countryNames.length);
+      const selectedCountry = countryNames[randomIndex];
+      const countryCode = countries[selectedCountry];
+
+      const flagURL = `https://flagcdn.com/w80/${countryCode}.png`;
+
+      resultDiv.innerHTML = `
+        ✈️ You should visit: <strong>${selectedCountry}</strong>
+        <img src="${flagURL}" alt="Flag of ${selectedCountry}">
+      `;
+    });
+  </script>
+
+</body>
+</html>

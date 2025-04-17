@@ -1,0 +1,78 @@
+body{
+    color: darksalmon;
+    background-color: rgb(239, 236, 214);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+}
+
+p{
+    font-size: 25px;
+}
+
+li{
+    font-size: 20px;
+}
+
+h1{
+    background-color: #ffcb82;  /* Choose any color you like */
+    padding: 50px;              /* Adds space inside the box */
+    text-align: center;         /* Centers the h1 text */
+    border-radius: 10px;        /* Optional: rounds the corners */
+    color: white;
+    font-size: 60px;
+}
+
+h2{
+    background-color: #ffcb82;  /* Choose any color you like */
+    padding: 30px;              /* Adds space inside the box */
+    text-align: center;         /* Centers the h1 text */
+    border-radius: 10px;        /* Optional: rounds the corners */
+    color: white;
+    font-size: 35px;
+}
+
+.centered-justified-right {
+    width: 1000px;               /* Set a fixed or max width */
+    margin: 0 auto;             /* Center the entire list block */
+    text-align: left;          /* Align the text to the right within the list */
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+.moretext {
+    width: 1000px;               /* Set a fixed or max width */
+    margin: 0 auto;             /* Center the entire list block */
+    text-align: center;          /* Align the text to the right within the list */
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 1500px; /* You can change this to make it bigger/smaller */
+    margin: 10px auto;
+    margin-bottom: 20px;
+}
+  
+.video-container iframe {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 60%;
+    height: 60%;
+    transform: translate(-50%, -50%); /* <-- Centers it */
+    border: none;
+    border-radius: 10px;
+}
+
+img{
+    display: block;          /* Makes the image a block-level element */
+    margin-left: auto;       /* Automatically adjusts the left margin */
+    margin-right: auto;      /* Automatically adjusts the right margin */
+    max-width: 800px;        /* Limits the image width to 100px */
+    height: auto;            /* Maintains the image’s aspect ratio */
+    border-radius: 10px;
+}
